@@ -58,7 +58,7 @@ export default function ToDos() {
             icon={<Add />}
             label="Add To Do"
             onClick={() => {
-              Router.push('/add-todo');
+              Router.push('/add-to-do');
             }}
           />
         </div>

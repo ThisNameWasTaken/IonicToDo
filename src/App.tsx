@@ -1,18 +1,6 @@
 import { Redirect, Route } from 'react-router-dom';
-import {
-  IonApp,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-} from '@ionic/react';
+import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import ToDos from './pages/ToDos';
@@ -35,6 +23,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import AddToDo from './pages/AddToDo';
 
 const App: React.FC = () => (
   <IonApp>
@@ -43,11 +32,8 @@ const App: React.FC = () => (
         <Route exact path="/todos">
           <ToDos />
         </Route>
-        <Route exact path="/tab2">
-          <Tab2 />
-        </Route>
-        <Route path="/tab3">
-          <Tab3 />
+        <Route path="/add-to-do">
+          <AddToDo />
         </Route>
         <Route path="/sign-in">
           <SignIn />

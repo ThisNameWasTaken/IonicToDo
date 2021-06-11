@@ -70,7 +70,7 @@ export default function ToDoList({ items }: { items: ToDo[] }) {
 
   function editToDo(item: ToDo) {
     history.push(
-      `/add-todo?edit=${item.id}&title=${item.title}&dueTime=${item.dueTime}`
+      `/add-to-do?edit=${item.id}&title=${item.title}&dueTime=${item.dueTime}`
     );
   }
 
