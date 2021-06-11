@@ -1,1 +1,1 @@
-export { default } from './AvatarEdit.js';
+export { default } from './AvatarEdit';

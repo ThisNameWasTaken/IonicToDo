@@ -25,7 +25,7 @@ const RegisterInfo = ({
 }: {
   email: string;
   name: string;
-  avatar: string;
+  avatar: any;
 }) => {
   const classes = useStyles();
   const [src, setSrc] = useState('');
