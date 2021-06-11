@@ -29,7 +29,7 @@ const useToDoListStyles = makeStyles((theme) => ({
   },
   nothingToDo: {
     opacity: 0.8,
-    height: 'calc(var(--vh, 1vh) * 100 - 72px - 48px)',
+    height: 'calc(100% - 72px - 48px)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
