@@ -67,11 +67,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-/**
- *
- * @param {{ label: string, icon: import('@material-ui/core/OverridableComponent').OverridableComponent<import('@material-ui/core').SvgIconTypeMap<{}, "svg">>, raised?: boolean, onClick?: React.MouseEventHandler<HTMLButtonElement>}} props
- * @returns
- */
 export default function ExtendedFab({
   label,
   icon,
@@ -79,8 +74,8 @@ export default function ExtendedFab({
   onClick,
 }: {
   label: string;
-  icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
-  raised: boolean;
+  icon: any;
+  raised?: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }) {
   const classes = useStyles();
