@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "IonicToDo",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

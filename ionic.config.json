@@ -1,5 +1,7 @@
 {
   "name": "IonicToDo",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react"
 }
