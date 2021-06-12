@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: 72 + 48,
     height: '100%',
-    // boxSizing: 'border-box',
+    boxSizing: 'border-box',
   },
   container: {
     maxWidth: 1330,
