@@ -11,6 +11,7 @@ import {
   TextField,
   Tooltip,
   Typography,
+  CircularProgress,
 } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useForm } from 'react-hook-form';
@@ -90,6 +91,7 @@ export default function SignIn() {
   } = useForm();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
   function togglePasswordVisibility() {
     setIsPasswordVisible((isVisible) => !isVisible);
@@ -105,6 +107,8 @@ export default function SignIn() {
     password: string;
   }) {
     setFirebaseError(null);
+    setIsSigningIn(true);
+
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
 
@@ -113,9 +117,13 @@ export default function SignIn() {
       setFirebaseError(err.message);
       console.error(err);
     }
+
+    setIsSigningIn(false);
   }
 
   async function signInWithGoogle() {
+    setIsSigningIn(true);
+
     try {
       await firebase
         .auth()
@@ -125,6 +133,8 @@ export default function SignIn() {
     } catch (err) {
       console.error(err);
     }
+
+    setIsSigningIn(false);
   }
 
   function signUp() {
@@ -161,6 +171,7 @@ export default function SignIn() {
                         <Fab
                           className={classes.fabGoogle}
                           onClick={signInWithGoogle}
+                          disabled={isSigningIn}
                         >
                           <Google className={classes.fabIcon} />
                         </Fab>
@@ -171,7 +182,10 @@ export default function SignIn() {
                         title="Sign in with Facebook"
                         aria-label="Sign in with Facebook"
                       >
-                        <Fab className={classes.fabFacebook}>
+                        <Fab
+                          className={classes.fabFacebook}
+                          disabled={isSigningIn}
+                        >
                           <Facebook className={classes.fabIcon} />
                         </Fab>
                       </Tooltip>
@@ -181,7 +195,10 @@ export default function SignIn() {
                         title="Sign in with Twitter"
                         aria-label="Sign in with Twitter"
                       >
-                        <Fab className={classes.fabTwitter}>
+                        <Fab
+                          className={classes.fabTwitter}
+                          disabled={isSigningIn}
+                        >
                           <Twitter className={classes.fabIcon} />
                         </Fab>
                       </Tooltip>
@@ -271,8 +288,13 @@ export default function SignIn() {
                         color="primary"
                         variant="contained"
                         type="submit"
+                        disabled={isSigningIn}
                       >
-                        sign in
+                        {isSigningIn ? (
+                          <CircularProgress size={24} />
+                        ) : (
+                          <>sign in</>
+                        )}
                       </Button>
                     </Grid>
                     <Grid item xs>
@@ -281,6 +303,7 @@ export default function SignIn() {
                         color="secondary"
                         variant="contained"
                         onClick={signUp}
+                        disabled={isSigningIn}
                       >
                         sign up
                       </Button>

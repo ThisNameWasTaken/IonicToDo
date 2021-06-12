@@ -18,6 +18,7 @@ import {
   IconButton,
   AppBar,
   Toolbar,
+  CircularProgress,
 } from '@material-ui/core';
 import {
   ArrowBack,
@@ -25,7 +26,7 @@ import {
   Visibility,
   VisibilityOff,
 } from '@material-ui/icons';
-import { IonContent, IonPage } from '@ionic/react';
+import { IonContent, IonPage, useIonToast } from '@ionic/react';
 
 import { Slides, Slide } from '../components/slides';
 import AvatarEdit from '../components/AvatarEdit';
@@ -186,6 +187,14 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     margin: 'auto',
   },
+  nextButton: {
+    width: 101,
+  },
+  errorToast: {
+    '--background': theme.palette.error.main,
+    '--color': theme.palette.error.contrastText,
+    '--button-color': theme.palette.error.contrastText,
+  },
 }));
 
 export default function SignUp() {
@@ -198,6 +207,10 @@ export default function SignUp() {
   ];
   const [activeStep, setActiveStep] = useState(0);
   const [prevActiveStep, setPrevActiveStep] = useState(-1);
+
+  const [isSigningUp, setIsSigningUp] = useState(false);
+
+  const [showErrorToast, dismissErrorToast] = useIonToast();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -281,6 +294,8 @@ export default function SignUp() {
   }
 
   async function onRegister() {
+    setIsSigningUp(true);
+
     try {
       const auth = firebase.auth();
       await auth.createUserWithEmailAndPassword(
@@ -319,7 +334,20 @@ export default function SignUp() {
       history.push('/to-dos');
     } catch (err) {
       console.error(err);
+      showErrorToast({
+        message: err.message,
+        cssClass: classes.errorToast,
+        duration: 5000,
+        buttons: [
+          {
+            text: 'hide',
+            handler: dismissErrorToast,
+          },
+        ],
+      });
     }
+
+    setIsSigningUp(false);
   }
 
   async function onNextStep() {
@@ -379,6 +407,7 @@ export default function SignUp() {
                 onClick={() => history.push('/sign-in')}
                 color="primary"
                 startIcon={<ArrowBack />}
+                disabled={isSigningUp}
               >
                 Back to sign in
               </Button>
@@ -561,7 +590,7 @@ export default function SignUp() {
                 <Button
                   color="primary"
                   variant="text"
-                  disabled={activeStep === 0}
+                  disabled={activeStep === 0 || isSigningUp}
                   onClick={onPrevStep}
                 >
                   back
@@ -569,15 +598,21 @@ export default function SignUp() {
                 <Button
                   color="primary"
                   variant="contained"
+                  className={classes.nextButton}
                   onClick={
                     activeStep === steps.length ? onRegister : onNextStep
                   }
+                  disabled={isSigningUp}
                 >
-                  {activeStep < steps.length - 1
-                    ? 'next'
-                    : activeStep === steps.length - 1
-                    ? 'done'
-                    : 'confirm'}
+                  {activeStep < steps.length - 1 ? (
+                    'next'
+                  ) : activeStep === steps.length - 1 ? (
+                    'done'
+                  ) : isSigningUp ? (
+                    <CircularProgress size={24} />
+                  ) : (
+                    <>confirm</>
+                  )}
                 </Button>
               </div>
             </div>
