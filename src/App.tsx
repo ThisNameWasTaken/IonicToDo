@@ -42,7 +42,7 @@ const App: React.FC = () => (
           <SignUp />
         </Route>
         <Route exact path="/">
-          <Redirect to="/sign-in" />
+          <Redirect to={localStorage.user ? '/to-dos' : '/sign-in'} />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
