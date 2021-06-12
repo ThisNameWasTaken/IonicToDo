@@ -1,5 +1,5 @@
 import { Fab, makeStyles, SvgIconTypeMap } from '@material-ui/core';
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { memo, MouseEventHandler, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ExtendedFab({
+export default memo(function ExtendedFab({
   label,
   icon,
   extended,
@@ -133,4 +133,4 @@ export default function ExtendedFab({
       </div>
     </div>
   );
-}
+});
