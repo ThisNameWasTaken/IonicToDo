@@ -13,6 +13,11 @@ import { IonContent, IonPage } from '@ionic/react';
 const ToDoList = lazy(() => import('../components/ToDoList/ToDoList'));
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    paddingTop: 72 + 48,
+    height: '100%',
+    // boxSizing: 'border-box',
+  },
   container: {
     maxWidth: 1330,
     width: '100%',
@@ -28,6 +33,7 @@ export default function ToDos() {
   const completedTodos = useToDos('completed');
   const [todoList, setTodoList] = useState(activeTodos);
   const [tab, setTab] = useState('active');
+  const [isExtended, setIsExtended] = useState(true);
 
   function onTabChange(value: 'active' | 'completed') {
     setTab(value);
@@ -45,8 +51,13 @@ export default function ToDos() {
 
   return (
     <IonPage>
-      <IonContent>
-        <div style={{ paddingTop: 72 + 48, height: '100%' }}>
+      <IonContent
+        scrollEvents
+        onIonScroll={(event) => {
+          setIsExtended(event.detail.scrollTop < 10);
+        }}
+      >
+        <div className={classes.root}>
           <NavBar />
           <TabBar onTabChange={onTabChange} />
           <main className={classes.container}>
@@ -56,6 +67,7 @@ export default function ToDos() {
           </main>
           <ExtendedFAB
             icon={<Add />}
+            extended={isExtended}
             label="Add To Do"
             onClick={() => {
               Router.push('/add-to-do');

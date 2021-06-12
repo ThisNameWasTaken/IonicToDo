@@ -70,37 +70,18 @@ const useStyles = makeStyles((theme) => ({
 export default function ExtendedFab({
   label,
   icon,
+  extended,
   raised,
   onClick,
 }: {
   label: string;
   icon: any;
+  extended?: boolean;
   raised?: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }) {
   const classes = useStyles();
-  const [isExtended, setIsExtended] = useState(true);
   const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    let _extended = true;
-
-    function onScroll() {
-      if (window.scrollY <= 10 && !_extended) {
-        setIsExtended(true);
-        _extended = true;
-      } else if (window.scrollY > 10 && _extended) {
-        setIsExtended(false);
-        _extended = false;
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    return function cleanup() {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, []);
 
   return (
     <div className={clsx(classes.fabContainer, raised && classes.fabRaised)}>
@@ -114,7 +95,7 @@ export default function ExtendedFab({
         <Fab
           variant="extended"
           color="secondary"
-          className={clsx(classes.fab, !isExtended && classes.collapsedFab)}
+          className={clsx(classes.fab, !extended && classes.collapsedFab)}
           onPointerDown={() => {
             setIsActive(true);
           }}
@@ -135,7 +116,7 @@ export default function ExtendedFab({
           <span
             className={clsx(
               classes.icon,
-              !isExtended && classes.collapsedFabIcon
+              !extended && classes.collapsedFabIcon
             )}
           >
             {icon}
@@ -143,7 +124,7 @@ export default function ExtendedFab({
           <span
             className={clsx(
               classes.fabLabel,
-              !isExtended && classes.collapsedFabLabel
+              !extended && classes.collapsedFabLabel
             )}
           >
             {label}
