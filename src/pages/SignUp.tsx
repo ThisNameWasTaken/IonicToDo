@@ -40,12 +40,12 @@ const Connector = withStyles((theme) => ({
   },
   active: {
     '& $line': {
-      borderColor: theme.palette.primary.main,
+      borderColor: theme.palette.secondary.main,
     },
   },
   completed: {
     '& $line': {
-      borderColor: theme.palette.primary.main,
+      borderColor: theme.palette.secondary.main,
     },
   },
   line: {
@@ -71,7 +71,7 @@ const useStepIconStyles = makeStyles((theme) => ({
     },
   },
   active: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
   circle: {
     width: theme.spacing(1.5),
@@ -84,7 +84,7 @@ const useStepIconStyles = makeStyles((theme) => ({
   },
   completed: {
     transition: theme.transitions.create('transform'),
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     zIndex: 1,
     fontSize: theme.spacing(3),
   },
@@ -600,7 +600,7 @@ export default function SignUp() {
                   back
                 </Button>
                 <Button
-                  color="primary"
+                  color="secondary"
                   variant="contained"
                   className={clsx(classes.button, classes.nextButton)}
                   onClick={

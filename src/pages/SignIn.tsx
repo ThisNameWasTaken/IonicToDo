@@ -285,7 +285,7 @@ export default function SignIn() {
                     <Grid item xs>
                       <Button
                         className={classes.button}
-                        color="primary"
+                        color="secondary"
                         variant="contained"
                         type="submit"
                         disabled={isSigningIn}
@@ -300,7 +300,7 @@ export default function SignIn() {
                     <Grid item xs>
                       <Button
                         className={classes.button}
-                        color="secondary"
+                        color="primary"
                         variant="contained"
                         onClick={signUp}
                         disabled={isSigningIn}
