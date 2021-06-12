@@ -14,6 +14,8 @@ import firebase from '../utils/firebase';
 import useUser from '../hooks/useUser';
 import { useHistory, useLocation } from 'react-router';
 import { IonContent, IonPage } from '@ionic/react';
+import useSelectedToDo from '../hooks/useSelectedToDo';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -55,12 +57,10 @@ function getNowDate() {
 
 export default function AddToDo() {
   const history = useHistory();
-  const location = useLocation<any>();
 
-  // @ts-ignore
-  const query = new URLSearchParams(location);
+  const { selectedToDo, selectToDo } = useSelectedToDo();
 
-  const buttonText = query.get('edit') ? 'edit to do' : 'add to do';
+  const buttonText = selectedToDo ? 'edit to do' : 'add to do';
 
   const classes = useStyles();
   const {
@@ -69,16 +69,17 @@ export default function AddToDo() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      'due time': query.get('dueTime') || `${getNowDate()}T${getNowTime()}`,
-      title: query.get('title') || '',
+      'due time': selectedToDo?.dueTime || `${getNowDate()}T${getNowTime()}`,
+      title: selectedToDo?.title || '',
     },
   });
   const user = useUser();
 
-  async function addToDo(params: any) {
-    console.log('add to do');
-    console.log({ params });
+  useEffect(() => {
+    console.log({ selectedToDo });
+  }, [selectedToDo]);
 
+  async function addToDo(params: any) {
     try {
       const docPath = firebase
         .firestore()
@@ -86,19 +87,20 @@ export default function AddToDo() {
         .doc(user?.uid)
         .collection('todos');
 
-      if (!query.get('edit')) {
+      if (!selectedToDo) {
         await docPath.add({
           title: params.title,
           dueTime: params['due time'],
           status: 'active',
         });
       } else {
-        // @ts-ignore
-        await docPath.doc(query.get('edit')).update({
+        await docPath.doc(selectedToDo.id).update({
           title: params.title,
           dueTime: params['due time'],
         });
       }
+
+      selectToDo(null);
 
       history.goBack();
     } catch (err) {

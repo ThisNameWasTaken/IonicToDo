@@ -15,6 +15,8 @@ import { List as VirtualizedList, WindowScroller } from 'react-virtualized';
 import useUser from '../../hooks/useUser';
 import firebase from '../../utils/firebase';
 import { useHistory } from 'react-router';
+import ToDo from '../../types/ToDo';
+import useSelectedToDo from '../../hooks/useSelectedToDo';
 
 const useToDoListStyles = makeStyles((theme) => ({
   list: {
@@ -37,41 +39,34 @@ const useToDoListStyles = makeStyles((theme) => ({
   },
 }));
 
-type ToDo = {
-  title: string;
-  dueTime: string;
-  id: string;
-  status: 'active' | 'completed';
-};
-
 export default function ToDoList({ items }: { items: ToDo[] }) {
   const classes = useToDoListStyles();
   const user = useUser();
   const history = useHistory();
+  const { selectToDo } = useSelectedToDo();
 
-  function getToDoPath(item: ToDo) {
+  function getToDoPath(toDo: ToDo) {
     return firebase
       .firestore()
       .collection('users')
       .doc(user?.uid)
       .collection('todos')
-      .doc(item.id);
+      .doc(toDo.id);
   }
 
-  function removeToDo(item: ToDo) {
-    return getToDoPath(item).delete();
+  function removeToDo(toDo: ToDo) {
+    return getToDoPath(toDo).delete();
   }
 
-  function completeToDo(item: ToDo) {
-    return getToDoPath(item).update({
+  function completeToDo(toDo: ToDo) {
+    return getToDoPath(toDo).update({
       status: 'completed',
     });
   }
 
-  function editToDo(item: ToDo) {
-    history.push(
-      `/add-to-do?edit=${item.id}&title=${item.title}&dueTime=${item.dueTime}`
-    );
+  function editToDo(toDo: ToDo) {
+    selectToDo(toDo);
+    history.push(`/add-to-do`);
   }
 
   function rowRenderer({
