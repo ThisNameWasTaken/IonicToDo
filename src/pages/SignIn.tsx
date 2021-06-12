@@ -108,7 +108,7 @@ export default function SignIn() {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
 
-      history.push('/todos');
+      history.push('/to-dos');
     } catch (err) {
       setFirebaseError(err.message);
       console.error(err);
@@ -121,7 +121,7 @@ export default function SignIn() {
         .auth()
         .signInWithPopup(new firebase.auth.GoogleAuthProvider());
 
-      history.push('/todos');
+      history.push('/to-dos');
     } catch (err) {
       console.error(err);
     }

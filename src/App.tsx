@@ -29,7 +29,7 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/todos">
+        <Route exact path="/to-dos">
           <ToDos />
         </Route>
         <Route path="/add-to-do">

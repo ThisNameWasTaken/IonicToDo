@@ -316,7 +316,7 @@ export default function SignUp() {
           photoURL,
         });
       }
-      history.push('/todos');
+      history.push('/to-dos');
     } catch (err) {
       console.error(err);
     }
