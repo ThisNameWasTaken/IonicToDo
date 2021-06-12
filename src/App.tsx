@@ -30,38 +30,43 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { ThemeProvider, CssBaseline } from '@material-ui/core';
+import theme from './theme/theme';
 
 const App: React.FC = () => {
   const [selectedToDo, selectToDo] = useState<ToDo | null | undefined>(null);
 
   return (
     <IonApp>
-      <SelectedToDoContext.Provider
-        value={{
-          selectedToDo,
-          selectToDo,
-        }}
-      >
-        <IonReactRouter>
-          <IonRouterOutlet>
-            <Route exact path="/to-dos">
-              <ToDos />
-            </Route>
-            <Route path="/add-to-do">
-              <AddToDo />
-            </Route>
-            <Route path="/sign-in">
-              <SignIn />
-            </Route>
-            <Route path="/sign-up">
-              <SignUp />
-            </Route>
-            <Route exact path="/">
-              <Redirect to={localStorage.user ? '/to-dos' : '/sign-in'} />
-            </Route>
-          </IonRouterOutlet>
-        </IonReactRouter>
-      </SelectedToDoContext.Provider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <SelectedToDoContext.Provider
+          value={{
+            selectedToDo,
+            selectToDo,
+          }}
+        >
+          <IonReactRouter>
+            <IonRouterOutlet>
+              <Route exact path="/to-dos">
+                <ToDos />
+              </Route>
+              <Route path="/add-to-do">
+                <AddToDo />
+              </Route>
+              <Route path="/sign-in">
+                <SignIn />
+              </Route>
+              <Route path="/sign-up">
+                <SignUp />
+              </Route>
+              <Route exact path="/">
+                <Redirect to={localStorage.user ? '/to-dos' : '/sign-in'} />
+              </Route>
+            </IonRouterOutlet>
+          </IonReactRouter>
+        </SelectedToDoContext.Provider>
+      </ThemeProvider>
     </IonApp>
   );
 };

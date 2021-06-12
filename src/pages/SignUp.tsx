@@ -188,12 +188,15 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
   },
   nextButton: {
-    width: 101,
+    width: 112,
   },
   errorToast: {
     '--background': theme.palette.error.main,
     '--color': theme.palette.error.contrastText,
     '--button-color': theme.palette.error.contrastText,
+  },
+  button: {
+    padding: theme.spacing(1.3, 2.7),
   },
 }));
 
@@ -592,13 +595,14 @@ export default function SignUp() {
                   variant="text"
                   disabled={activeStep === 0 || isSigningUp}
                   onClick={onPrevStep}
+                  className={classes.button}
                 >
                   back
                 </Button>
                 <Button
                   color="primary"
                   variant="contained"
-                  className={classes.nextButton}
+                  className={clsx(classes.button, classes.nextButton)}
                   onClick={
                     activeStep === steps.length ? onRegister : onNextStep
                   }

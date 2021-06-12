@@ -8,13 +8,23 @@ const theme = createMuiTheme({
       main: '#454545',
     },
     secondary: {
-      main: '#dd7130',
+      main: '#48E5C2',
     },
     error: {
       main: red.A400,
     },
     background: {
       default: '#fff',
+    },
+  },
+  shape: {
+    borderRadius: 6,
+  },
+  overrides: {
+    MuiButton: {
+      root: {
+        borderRadius: 32,
+      },
     },
   },
 });
